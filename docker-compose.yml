@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  animals:
+    container_name: msanimals
+    build: ./animals
+    volumes:
+      - ./animals/code:/usr/src/app
+    networks:
+      - mssafari
+    ports:
+      - "3010:3010"
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm run dev"
+  gateway:
+    container_name: apigateway
+    build: ./apigateway
+    volumes:
+      - ./apigateway/code:/usr/src/app
+    networks:
+      - mssafari
+    ports:
+      - "3011:3011"
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm run dev"
+networks:
+  mssafari:
+    driver: bridge
